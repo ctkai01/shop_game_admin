@@ -1,0 +1,38 @@
+.heading {
+  margin-bottom: 30px;
+}
+
+html {
+  font-size: 14px;
+}
+
+.filter-wrapper, .text-right {
+  padding-right: 30px !important;
+}
+
+#datatableProduct_filter {
+  visibility: hidden;
+}
+
+#datatableProduct_info {
+  position: absolute;
+  padding-top: 0;
+  margin-top: 34px;
+}
+
+#datatableProduct_length {
+  visibility: hidden;
+}
+
+#datatableProduct_paginate {
+  margin-top: 33px;
+}
+
+#datatableProduct_wrapper {
+  margin-top: -25px;
+}
+
+#btn_add_menu {
+  display: flex;
+  align-items: center;
+}
