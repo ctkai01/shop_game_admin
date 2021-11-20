@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-lg-8 field-input" style="padding-left: 0px">
                         <div class="form-group" style="text-align: left">
-                            <label for="password_account">Game Account <span class="help text-danger"></span></label>
+                            <label for="password_account">Password Account <span class="help text-danger"></span></label>
                             <input type="text" class="form-control" id="password_account" name="password_account"
                             placeholder="Password Account"
                             value="{{ old('password_account') }}">

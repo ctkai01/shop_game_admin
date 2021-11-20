@@ -71,7 +71,7 @@ class DetailProductController extends Controller
     }
 
     public function store(Request $request) {
-            $request->validate([
+        $request->validate([
                 'code_card' => "nullable|string|max:255|unique:detail_products,code_card",
                 'game_account' => 'nullable|required_with: password_account|string|max:255|unique:detail_products,account_game',
                 'password_account' => "nullable|required_with: game_account|string|min:8|max:255",
@@ -79,14 +79,15 @@ class DetailProductController extends Controller
 
             $data = [];
 
-            if ($request->has('code_card')) {
+            if ($request->code_card) {
                 $data['code_card'] = Ultilities::clearXSS($request->code_card);
             } else {
-                $data['game_account'] = Ultilities::clearXSS($request->game_account);
-                $data['password_account'] = Ultilities::clearXSS($request->password_account);
+                $data['account_game'] = Ultilities::clearXSS($request->game_account);
+                $data['password_game'] = Ultilities::clearXSS($request->password_account);
             }
 
             $data['product_id'] = $request->id_product;
+           
             $productDetail = DetailProduct::create($data);
 
             if ($productDetail) {
@@ -105,11 +106,11 @@ class DetailProductController extends Controller
 
         $data = [];
 
-        if ($request->has('code_card')) {
+        if ($request->code_card) {
             $data['code_card'] = Ultilities::clearXSS($request->code_card);
         } else {
-            $data['game_account'] = Ultilities::clearXSS($request->game_account);
-            $data['password_account'] = Ultilities::clearXSS($request->password_account);
+            $data['account_game'] = Ultilities::clearXSS($request->game_account);
+            $data['password_game'] = Ultilities::clearXSS($request->password_account);
         }
 
         $detailProduct = DetailProduct::find($id);
