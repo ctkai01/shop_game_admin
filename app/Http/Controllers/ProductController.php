@@ -16,11 +16,11 @@ class ProductController extends Controller
         return view('products.index');
     }
 
-    public function datatable(Product $category, Request $request)
+    public function datatable(Product $productModel, Request $request)
     {   
 
         if ($request->ajax()) {
-            $data = $category->orderBy('id', 'desc')->get();
+            $data = $productModel->orderBy('id', 'desc')->get();
             return DataTables::of($data)
             ->addIndexColumn()
             
@@ -46,11 +46,15 @@ class ProductController extends Controller
                 return $data->count;
             })
             ->addColumn('action', function($data){
-                return view('common.action', [
-                    'model' => $data,
-                    'url_edit' => route('products.edit', $data->id),
-                    'url_destroy' => route('products.destroy', $data->id)
-                ]);
+                $urlEdit = route('products.edit', $data->id);
+                $urlDelete = route('products.destroy', $data->id);
+                $urlCreateDetail = route('detail-products.create', $data->id);
+         
+                return "
+                    <a href='$urlCreateDetail' class='btn btn-success waves-effect waves-light btn-sm btn-btn-create-detail data-id='$data->id' title='Add Detail'><i class='fas fa-plus'></i></a>
+                    <a href=".$urlEdit." class='btn btn-info waves-effect waves-light btn-sm btn-edit' data-id=".$data->id." title='Edit'><i class='fas fa-edit'></i></a>
+                    <a href=".$urlDelete." class='btn btn-danger waves-effect waves-light btn-sm btn-delete' data-id=".$data->id." title='Delete'><i class='fas fa-trash-alt'></i></a>
+                ";
             })
             ->rawColumns(['action', 'image'])
             ->make(true);

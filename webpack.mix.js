@@ -17,6 +17,7 @@ const mix = require('laravel-mix');
 
 mix.sass('resources/sass/category-list.scss', 'public/css')
     .sass('resources/sass/product-list.scss', 'public/css')
+    .sass('resources/sass/detail-product-list.scss', 'public/css')
 ;
    
 

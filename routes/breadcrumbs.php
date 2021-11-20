@@ -33,3 +33,17 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->push('Edit Product', route('products.edit', $id));
     });
 
+    // Detail Products 
+    Breadcrumbs::for('products-detail', function ($trail) {
+        $trail->parent('dashboard');
+        $trail->push('Detail Products Management', route('detail-products.index'));
+    });
+    Breadcrumbs::for('add_product-detail', function ($trail, $id) {
+        $trail->parent('products-detail');
+        $trail->push('Create Detail Product ', route('detail-products.create', $id));
+    });
+    Breadcrumbs::for('edit_product-detail', function ($trail, $id) {
+        $trail->parent('products-detail');
+        $trail->push('Edit Detail Product', route('detail-products.edit', $id));
+    });
+

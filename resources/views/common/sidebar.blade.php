@@ -17,6 +17,7 @@
                 {{-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Users management</span></a></li></li> --}}
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('categories.index')}}" aria-expanded="false"><i class="mdi mdi-star-circle"></i><span class="hide-menu">Categories management</span></a></li></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('products.index')}}" aria-expanded="false"><i class="mdi mdi-shopping"></i><span class="hide-menu">Products management</span></a></li></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('detail-products.index')}}" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">Detail Products management</span></a></li></li>
             
 
                 {{-- <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-cog" style="font-size: 20px"></i> Setting </a>
