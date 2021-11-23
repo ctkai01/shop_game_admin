@@ -116,15 +116,6 @@
                     </div>
                     <div class="col-lg-8 field-input" style="padding-left: 0px">
                         <div class="form-group" style="text-align: left">
-                            <label>Count<span class="help text-danger"> *</span></label>
-                            <input type="text" class="form-control" value="{{ old('count') }}" id="count" name="count" placeholder="Count" value="">
-                            @if ($errors->has('count'))
-                                <span class="text-danger pt-2">{{ $errors->first('count') }}</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-lg-8 field-input" style="padding-left: 0px">
-                        <div class="form-group" style="text-align: left">
                             <label>Description <span class="help text-danger">*</span></label>
                             <textarea name="description" id="description" value="{{ old('description') }}">
                                

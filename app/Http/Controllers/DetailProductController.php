@@ -87,8 +87,11 @@ class DetailProductController extends Controller
             }
 
             $data['product_id'] = $request->id_product;
-           
+            
             $productDetail = DetailProduct::create($data);
+
+            Product::where('id', $request->id_product)->increment('count', 1);
+            
 
             if ($productDetail) {
                 return redirect()->route('detail-products.index')->with(['alert-type' => 'success', 'message' => __('app.create_success')]);

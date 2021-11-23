@@ -83,7 +83,6 @@ class ProductController extends Controller
                 'categories' => 'required|array',
                 'price' => "required|numeric|max:9999999999|min:0",
                 'discount' => "required|numeric|max:100|min:0",
-                'count' => "required|numeric|max:9999999999|min:0",
                 'description' => 'nullable',
             ]);
 
@@ -93,7 +92,7 @@ class ProductController extends Controller
                 'image' => $this->saveImage($request->image),
                 'price' => Ultilities::clearXSS($request->price),
                 'discount' => Ultilities::clearXSS($request->discount),
-                'count' => Ultilities::clearXSS($request->count),
+                'count' => 0,
                 'description' =>  $request->description,
             ];
 
@@ -118,7 +117,6 @@ class ProductController extends Controller
                 'categories' => 'required|array',
                 'price' => "required|numeric|max:9999999999|min:0",
                 'discount' => "required|numeric|max:100|min:0",
-                'count' => "required|numeric|max:9999999999|min:0",
                 'description' => 'nullable',
             ]);
             $data = [
@@ -126,7 +124,6 @@ class ProductController extends Controller
                 'slug' =>  Ultilities::clearXSS($request->slug),
                 'price' => Ultilities::clearXSS($request->price),
                 'discount' => Ultilities::clearXSS($request->discount),
-                'count' => Ultilities::clearXSS($request->count),
                 'description' =>  $request->description,
             ];
             
