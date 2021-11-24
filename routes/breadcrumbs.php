@@ -47,3 +47,9 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
         $trail->push('Edit Detail Product', route('detail-products.edit', $id));
     });
 
+    //Request Recharge 
+    Breadcrumbs::for('recharge_request_management', function ($trail) {
+        $trail->parent('dashboard');
+        $trail->push('Recharge Request Management', route('recharges.index'));
+    });
+

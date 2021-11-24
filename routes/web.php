@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DetailProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RechargeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,5 +58,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{id}/edit', [DetailProductController::class, 'edit'])->name('edit');
         Route::post('/{id}', [DetailProductController::class, 'update'])->name('update');
         Route::delete('/{id}', [DetailProductController::class, 'destroy'])->name('destroy');
+    });
+
+    //Recharge
+    Route::group(['prefix' => 'recharges', 'as' => 'recharges.'], function() {
+        Route::get('/', [RechargeController::class, 'index'])->name('index');
+        Route::get('/datatable', [RechargeController::class, 'datatable'])->name('datatable');
+        Route::post('/handle-request/{type}', [RechargeController::class, 'handleRequest'])->name('handle');
     });
 });
