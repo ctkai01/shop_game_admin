@@ -19,7 +19,7 @@ class DetailProductController extends Controller
     public function datatable(DetailProduct $detailProductModel, Request $request)
     {   
         if ($request->ajax()) {
-            $data = $detailProductModel->orderBy('id', 'desc')->get();
+            $data = $detailProductModel->where('sold', DetailProduct::NOT_SOLD)->orderBy('id', 'desc')->get();
             return DataTables::of($data)
             ->addIndexColumn()
             
@@ -136,6 +136,8 @@ class DetailProductController extends Controller
     {   
         $detailProduct = DetailProduct::find($id);
 
+        Product::where('id', $detailProduct->product_id)->decrement('count', 1);
+        
         $result = $detailProduct->delete();
 
         if ($result) {

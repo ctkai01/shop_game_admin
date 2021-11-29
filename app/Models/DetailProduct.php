@@ -12,6 +12,8 @@ class DetailProduct extends Model
     protected $table = 'detail_products';
     protected $guarded = [];
     
+    const SOLD = 1;
+    const NOT_SOLD = 0;
 
     public function product() {
         return $this->belongsTo(Product::class);
