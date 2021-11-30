@@ -26,6 +26,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::post('/getProduct', [HomeController::class, 'getProduct'])->name('dashboard.product');
 
     //Categories 
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function() {
@@ -37,7 +38,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
     });
-
     //Products 
     Route::group(['prefix' => 'products', 'as' => 'products.'], function() {
         Route::get('/', [ProductController::class, 'index'])->name('index');

@@ -21,7 +21,9 @@
         }
 
         .statis-box {
-            margin-top: 50px
+            margin-top: 50px;
+            /* display: flex;
+            justify-content: center; */
         }
 
         .align-items-center {
@@ -85,8 +87,8 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex align-items-center">
                             <div class="m-r-10"><span class="text-orange display-5"><i class="mdi mdi-wallet"></i></span></div>
-                            <div><span>Wallet Balance</span>
-                                <h3 class="font-medium m-b-0">$3,567.53</h3>
+                            <div><span>Total Amount Recharged</span>
+                                <h3 class="font-medium m-b-0 totalRecharge">{{ $totalRecharge }}</h3>
                             </div>
                         </div>
                     </div>
@@ -95,30 +97,30 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex align-items-center">
                             <div class="m-r-10"><span class="text-cyan display-5"><i class="mdi mdi-star-circle"></i></span></div>
-                            <div><span>Referral Earnings</span>
-                                <h3 class="font-medium m-b-0">$769.08</h3>
+                            <div><span>Total Amount bought</span>
+                                <h3 class="font-medium m-b-0 totalBought">{{ $totalBought }}</h3>
                             </div>
                         </div>
                     </div>
                     <!-- col -->
                     <!-- col -->
-                    <div class="col-lg-3 col-md-6">
+                    {{-- <div class="col-lg-3 col-md-6">
                         <div class="d-flex align-items-center">
                             <div class="m-r-10"><span class="text-info display-5"><i class="mdi mdi-shopping"></i></span></div>
                             <div><span>Estimate Sales</span>
                                 <h3 class="font-medium m-b-0">5489</h3></div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- col -->
                     <!-- col -->
-                    <div class="col-lg-3 col-md-6">
+                    {{-- <div class="col-lg-3 col-md-6">
                         <div class="d-flex align-items-center">
                             <div class="m-r-10"><span class="text-primary display-5"><i class="mdi mdi-currency-usd"></i></span></div>
                             <div><span>Earnings</span>
                                 <h3 class="font-medium m-b-0">$23,568.90</h3>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- col -->
                 </div>
             </div>
@@ -136,8 +138,109 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            // const formatToCurrency = (amount) => {
+            //     return "$" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+            // };
+            const totalRecharge = parseInt($(".totalRecharge").text()) 
+            const totalBought = parseInt($(".totalBought").text()) 
+            $(".totalRecharge").text(totalRecharge.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " VNĐ")
+            $(".totalBought").text(totalBought.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " VNĐ")
+           
+            let myChart = document.getElementById('myChart').getContext('2d');
 
-            
+            var massPopChart = new Chart(myChart, {
+                type:'bar', 
+                data:{
+                    labels: [],
+                    datasets:[{
+                        label:'Product',
+                        data: [],
+                        backgroundColor:'rgb(0,191,255)',
+                        borderWidth:1,
+                        borderColor:'#777',
+                        hoverBorderWidth:3,
+                        hoverBorderColor:'#000'
+                    }]
+                },
+                options:{
+                    title:{
+                        display:true,
+                        fontSize:25
+                    },
+                    legend:{
+                        display:true,
+                        position:'right',
+                        labels:{
+                            fontColor:'#000',
+                            fontSize: '50px'
+                        }
+                    },
+                    layout:{
+                        padding:{
+                            left:50,
+                            right:0,
+                            bottom:0,
+                            top:0
+                        }
+                    },
+                    tooltips:{
+                        enabled: true
+                    }
+                }
+            });
+            function addData(chart, label, data) {
+                chart.data.labels = label;
+                chart.data.datasets[0].data = data
+                chart.update();
+            }
+
+            const statisticalUser = function() {
+                $.ajax({
+                    url: "{{ route('dashboard.product') }}",
+                    type: 'POST',
+                    data: {
+                        time: $('.custom-select option:selected').attr('value'),
+                    },
+                    success: function(data) {
+                        console.log(data)
+                        if ( data.type === 'Week' ) {
+                            labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+                            $('.card-subtitle').text('Overview of Latest Week')
+                            addData(massPopChart, labels, data.users)
+
+                        } else if ( data.type === 'Month' ) {
+                            var dt = new Date();
+                            var month = dt.getMonth() + 1;
+                            var year = dt.getFullYear();
+                            var daysInMonth = new Date(year, month, 0).getDate();
+                            labels = []
+                            for ( i = 1; i <= daysInMonth; i++ ) {
+                                labels.push(i)
+                            }
+                            $('.card-subtitle').text('Overview of Latest Month')
+                            addData(massPopChart, labels, data.users)
+
+                        } else if ( data.type === 'Year' ) {
+                            labels = ['January', 'February', 'March', 'April', 
+                                    'May', 'June', 'July', 'August', 'September', 
+                                    'October', 'November', 'December'
+                                    ]
+                            $('.card-subtitle').text('Overview of Latest Year')
+                            addData(massPopChart, labels, data.users)
+                        }
+                    },
+                    erro: function(error) {
+                        console.log('err')
+                    }
+                })
+            }
+
+            statisticalUser()
+
+            $( ".custom-select" ).change(function() {
+                statisticalUser() 
+
+            });
         })
     </script>
 @endpush

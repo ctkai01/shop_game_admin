@@ -19,7 +19,6 @@ class CategoryController extends Controller
 
     public function datatable(Category $category, Request $request)
     {   
-
         if ($request->ajax()) {
             $data = $category->orderBy('id', 'desc')->get();
             return DataTables::of($data)
